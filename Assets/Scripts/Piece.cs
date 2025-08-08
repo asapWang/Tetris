@@ -21,5 +21,43 @@ public class Piece : MonoBehaviour
             this.cells[i] = (Vector3Int)activeTetro.cells[i];
         }
     }
+    public void Update() 
+    {
+        this.board.ClearPiece(this);
+        if(Input.GetKeyDown(KeyCode.A)) {
+            Move(Vector2Int.left);
+        }
+        if(Input.GetKeyDown(KeyCode.D)) {
+            Move(Vector2Int.right);
+        }
+        if(Input.GetKeyDown(KeyCode.S)) {
+            Move(Vector2Int.down);
+        }
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            HardDrop();
+        }
+        this.board.SetPiece(this);
+
+    }
+    public bool Move(Vector2Int translation)
+    {
+        Vector3Int newPosition=this.position;
+        newPosition.x+=translation.x;
+        newPosition.y+=translation.y;
+        if (this.board.IsOk(newPosition,this))
+        {
+            this.position=newPosition;
+            return true;
+        }
+        return false;
+    } 
+
+    public void HardDrop()
+    {
+        while (Move(Vector2Int.down))
+        {
+            continue;
+        }
+    }
 
 }
