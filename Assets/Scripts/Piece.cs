@@ -69,11 +69,22 @@ public class Piece : MonoBehaviour
 
     public void Rotation(int direction)
     {
-        this.rotationIndex = Wrap(direction, 0, 3);
-
-        for(int i=0;i<this.cells.Length;i++)
+        int oldRotationIndex=this.rotationIndex;
+        this.rotationIndex = Wrap(this.rotationIndex+direction, 0, 4);
+        ApplyRotate(direction);
+        if(!KickWallsTest(oldRotationIndex,direction))
         {
-            Vector3 cell = this.cells[i]; 
+            ApplyRotate(-direction);  
+            this.rotationIndex=oldRotationIndex;
+        }
+ 
+    }
+
+    public void ApplyRotate(int direction)
+    {
+        for (int i = 0; i < this.cells.Length; i++)
+        {
+            Vector3 cell = this.cells[i];
             int x, y;
             switch (this.activeTetro.tetromino)
             {
@@ -89,10 +100,36 @@ public class Piece : MonoBehaviour
                     y = Mathf.RoundToInt((cell.x * Data.RotationMatrix[2] * direction) + (cell.y * Data.RotationMatrix[3] * direction));
                     break;
             }
-            this.cells[i]= new Vector3Int(x, y,0);
+            this.cells[i] = new Vector3Int(x, y, 0);
         }
-        
     }
+
+    public bool KickWallsTest(int rotationIndex,int direction)
+    {
+        int wallKicksIndex=GetWallKicksIndex(rotationIndex, direction);
+        for(int i=0;i<this.activeTetro.wallkicks.GetLength(1);i++)
+        {
+            Vector2Int translation = this.activeTetro.wallkicks[wallKicksIndex,i];
+            if (Move(translation))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int GetWallKicksIndex(int rotationIndex, int direction)
+    {
+        int wallKicksIndex = rotationIndex * 2;
+        if(direction<0)
+        {
+            wallKicksIndex--;
+        }
+        wallKicksIndex=Wrap(wallKicksIndex,0,this.activeTetro.wallkicks.GetLength(0));
+        return wallKicksIndex;
+    }
+
+
     private int Wrap(int input, int min, int max)
     {
         if (input < min)
