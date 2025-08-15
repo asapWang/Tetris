@@ -36,7 +36,15 @@ public class Board : MonoBehaviour
         int random = Random.Range(0, this.tetrominoDatas.Length);
         TetrominoData tetrominoData = this.tetrominoDatas[random];
         this.piece.Initialize(this, tetrominoData, position);
-        SetPiece(this.piece);
+        if(IsOk(position,this.piece))
+        {
+            SetPiece(this.piece);
+        }
+        else
+        {
+            GameOver();
+        }
+       
     }
 
     public void SetPiece(Piece piece)
@@ -75,5 +83,63 @@ public class Board : MonoBehaviour
             }
         }
         return true;
+    }
+
+    public void ClearLine()
+    {
+        RectInt bound=this.boundary;
+        int row = bound.yMin;
+        for(; row<bound.yMax;)
+        {
+            if (IsLineFull(row))
+            {
+                ClearAndMove(row);
+            }
+            else
+            {
+                row++;
+            }
+        }
+    }
+
+    public bool IsLineFull(int row)
+    {
+        RectInt bound = this.boundary;
+        int col=bound.xMin;
+        for (; col<bound.xMax;col++ )
+        {
+            Vector3Int position = new Vector3Int(col, row);
+            if (!this.tilemap.HasTile(position))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void ClearAndMove(int row)
+    {
+        RectInt bound = this.boundary;
+        int col=bound.xMin;
+        for (; col<bound.xMax;col++)
+        {
+            Vector3Int position = new Vector3Int(col, row);
+            this.tilemap.SetTile(position, null);
+        }
+        for(; row < bound.yMax; row++)
+        {
+            for (col = bound.xMin; col < bound.yMax; col++)
+            {
+                Vector3Int position = new Vector3Int(col, row + 1);
+                TileBase tile = this.tilemap.GetTile(position);
+                position=new Vector3Int(col, row);
+                this.tilemap.SetTile(position, tile);
+            }
+        }
+    }
+
+    private void GameOver()
+    {
+        this.tilemap.ClearAllTiles();
     }
 }

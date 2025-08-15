@@ -73,6 +73,7 @@ public class Piece : MonoBehaviour
     public void Lock()
     {
         this.board.SetPiece(this);
+        this.board.ClearLine();
         this.board.SpawnPiece();
     }
     public bool Move(Vector2Int translation)
