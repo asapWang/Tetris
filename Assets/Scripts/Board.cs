@@ -8,7 +8,7 @@ public class Board : MonoBehaviour
     public TetrominoData[] tetrominoDatas;
     public Tilemap tilemap { get; private set; }
     private Vector2Int boundarySize = new Vector2Int(10, 20);
-    private RectInt boundary
+    public RectInt boundary
     {
         get
         {

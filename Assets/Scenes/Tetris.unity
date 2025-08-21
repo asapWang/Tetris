@@ -494,7 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6828fad807f45824f80274f1bd567fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: -1, y: 0, z: 0}
+  position: {x: -1, y: 8, z: 0}
   tetrominoDatas:
   - tetromino: 0
     tile: {fileID: 11400000, guid: 4106c7b0438c0eb41886593e30e398c3, type: 2}
@@ -550,6 +550,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8abe0a961dec94080e44f5e060091e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stepDelay: 1
+  lockDelay: 0.5
 --- !u!1 &1126895607
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,6 +562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1126895609}
   - component: {fileID: 1126895608}
+  - component: {fileID: 1126895610}
   m_Layer: 0
   m_Name: ghost
   m_TagString: Untagged
@@ -595,6 +598,21 @@ Transform:
   - {fileID: 963092973}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1126895610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126895607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccc84ce953f8274c9040d69234d3141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  board: {fileID: 1035195653}
+  trackingPiece: {fileID: 1035195656}
+  tile: {fileID: 11400000, guid: b472ac874d4b7e24b9a1d62874d6c8f0, type: 2}
 --- !u!1 &1357742723
 GameObject:
   m_ObjectHideFlags: 0
