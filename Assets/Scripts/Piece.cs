@@ -12,20 +12,22 @@ public class Piece : MonoBehaviour
     public float lockDelay = 0.5f;
     private float stepTime;
     private float lockTime;
+    
   
     
-    public void Initialize(Board board,TetrominoData activeTetro,Vector3Int position)
+    public void Initialize(Board board, TetrominoData activeTetro, Vector3Int position)
     {
         this.board = board;
         this.position = position;
-        this.activeTetro= activeTetro;
-        this.stepTime=Time.time+stepDelay;
-        this.lockTime= 0;
-        if(this.cells == null)
+        this.activeTetro = activeTetro;
+        this.stepTime = Time.time + stepDelay;
+        this.lockTime = 0;
+        if (this.cells == null)
         {
-            this.cells=new Vector3Int[activeTetro.cells.Length];
+            this.cells = new Vector3Int[activeTetro.cells.Length];
         }
-        for(int i=0;i<this.cells.Length;i++) {
+        for (int i = 0; i < this.cells.Length; i++)
+        {
             this.cells[i] = (Vector3Int)activeTetro.cells[i];
         }
     }
